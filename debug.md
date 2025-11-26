@@ -12,12 +12,14 @@ Display usage information and ask for input:
 **Usage:** `/debug <error-or-location>`
 
 **Examples:**
+
 - `/debug "TypeError: Cannot read property 'map' of undefined"` - Debug an error message
 - `/debug src/api/users.ts:45` - Debug code at specific location
 - `/debug "connection refused"` - Debug a runtime error
 - Paste a full stack trace for analysis
 
 **Workflow:**
+
 1. Parse error message and stack trace
 2. Search codebase for related code
 3. Analyze likely causes
@@ -48,7 +50,8 @@ Analyze the error and provide debugging guidance.
    - Variable/function names mentioned
 
    Common patterns:
-   ```
+
+   ```text
    TypeError: Cannot read property 'x' of undefined
    → null/undefined access
 
@@ -60,21 +63,23 @@ Analyze the error and provide debugging guidance.
 
    ECONNREFUSED
    → network/connection issue
-   ```
+   ```text
 
 2. **Locate Relevant Code**
 
    If file:line provided:
+
    ```bash
    # Read the specific file
    # Show context around the error line
-   ```
+   ```text
 
    If error mentions code:
+
    ```bash
    # Search for the function/variable
    rg "functionName" --type ts
-   ```
+   ```text
 
    Extract:
    - The problematic code
@@ -111,13 +116,14 @@ Analyze the error and provide debugging guidance.
 4. **Search for Similar Issues**
 
    If needed:
+
    ```bash
    # Search codebase for similar patterns
    rg "similar error handling" --type ts
 
    # Check for related tests
    rg "test.*functionName" --type ts
-   ```
+   ```text
 
    Also search web for:
    - Framework-specific solutions
@@ -143,50 +149,56 @@ Analyze the error and provide debugging guidance.
    ```tsx
    // Line 23
    return users.map(user => <UserCard key={user.id} user={user} />)
-   ```
+   ```text
 
    ### Fix Options
 
    #### Option 1: Optional Chaining (Quick Fix)
+
    ```tsx
    return users?.map(user => <UserCard key={user.id} user={user} />) ?? []
-   ```
+   ```text
 
    #### Option 2: Early Return (Better)
+
    ```tsx
    if (!users) return <Loading />
    return users.map(user => <UserCard key={user.id} user={user} />)
-   ```
+   ```text
 
    #### Option 3: Default Value (Best for this case)
+
    ```tsx
    const [users, setUsers] = useState<User[]>([])  // Initialize as empty array
    return users.map(user => <UserCard key={user.id} user={user} />)
-   ```
+   ```text
 
    ### Prevention
 
    - Add TypeScript strict null checks
    - Initialize state with proper defaults
    - Add loading states for async data
-   ```
+
+   ```text
 
 6. **Check for Patterns**
 
    Look for similar issues elsewhere:
+
    ```bash
    # Find similar patterns that might have same bug
    rg "\.map\(" --type tsx | grep -v "?."
-   ```
+   ```text
 
    Report if found:
+
    ```markdown
    ### Similar Patterns Found
 
    These locations might have the same issue:
    - src/components/PostList.tsx:45
    - src/components/CommentList.tsx:32
-   ```
+   ```text
 
 7. **Provide Context**
 
@@ -226,7 +238,7 @@ Analyze the error and provide debugging guidance.
 
 ### Related
 [Links, docs, similar issues]
-```
+```text
 
 ## Notes
 

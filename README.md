@@ -10,15 +10,15 @@ git clone git@github.com:claude-commands/command-debug.git <clone-path>/command-
 
 # Symlink (use full path to cloned repo)
 ln -s <clone-path>/command-debug/debug.md ~/.claude/commands/debug.md
-```
+```text
 
 ## Usage
 
-```
+```text
 /debug "TypeError: Cannot read property 'map' of undefined"
 /debug src/api/users.ts:45
 /debug "connection refused"
-```
+```text
 
 Or paste a full stack trace for analysis.
 
@@ -46,17 +46,20 @@ The `users` variable is undefined when `map()` is called.
 #### Option 1: Optional Chaining
 ```tsx
 return users?.map(user => <UserCard />) ?? []
-```
+```text
 
 #### Option 2: Default Value
+
 ```tsx
 const [users, setUsers] = useState<User[]>([])
-```
+```text
 
 ### Similar Patterns Found
+
 - src/components/PostList.tsx:45
 - src/components/CommentList.tsx:32
-```
+
+```text
 
 ## Error Categories
 
@@ -76,4 +79,4 @@ const [users, setUsers] = useState<User[]>([])
 
 ```bash
 cd <clone-path>/command-debug && git pull
-```
+```text
